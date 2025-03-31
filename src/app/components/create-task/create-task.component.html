@@ -1,0 +1,25 @@
+@if (isFormEnabled) {
+<form class="flex flex-col gap-4" [formGroup]="form" (ngSubmit)="OnSubmit()">
+  <label for="description">Task's description</label>
+  <input
+    name="description"
+    placeholder="Type the description"
+    formControlName="description"
+    type="text"
+  />
+
+  <label for="totalPomodoros">Task's number of pomodoros</label>
+  <input
+    name="totalPomodoros"
+    placeholder="Type the number of pomodoros"
+    formControlName="totalPomodoros"
+    type="number"
+  />
+
+  <button class="bg-red-500 cursor-auto" role="button" type="submit">
+    Submit
+  </button>
+</form>
+} @else {
+<button (click)="OnToggleForm()">Toggle Form</button>
+}

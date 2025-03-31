@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, OnInit, Signal } from '@angular/core';
+import { Task } from './models/task.model';
+import { PomodoroService } from './services/pomodoro.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { TaskComponent } from './components/task/task.component';
+import { CreateTaskComponent } from './components/create-task/create-task.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [TaskComponent, CreateTaskComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'angular_pomodoro';
+  private pomodoroService = inject(PomodoroService);
+  tasks: Signal<Task[] | undefined> = toSignal(
+    this.pomodoroService.tasksSubject
+  );
 }
