@@ -29,19 +29,19 @@ export class PomodoroService {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }
 
-  createTask(task: Task): void {
+  createTask(newTask: Task): void {
     let tasks = this.tasksSubject.value;
 
     // Adding the new task to the end of the array
-    this.tasksSubject.next([...tasks, task]);
+    this.tasksSubject.next([...tasks, newTask]);
   }
 
-  editTask(index: number, key: string, value: string | number): void {
+  editTask(index: number, updatedTask: Task): void {
     // Modifying only the task that must be edited
     this.tasksSubject.next(
       this.tasksSubject.value.map((task, i) => {
         if (i === index) {
-          return { ...task, [key]: value };
+          return updatedTask;
         }
         return task;
       })

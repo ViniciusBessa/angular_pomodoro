@@ -1,5 +1,54 @@
-@if (isEditing) { } @else {
+@if (isEditing) {
+<form
+  class="flex flex-col gap-4"
+  [formGroup]="editingForm"
+  (ngSubmit)="OnSubmit()"
+>
+  <label for="newDescription">Task's description</label>
+  <input
+    name="newDescription"
+    placeholder="Type the description"
+    formControlName="newDescription"
+    type="text"
+  />
+
+  <label for="newCurrentPomodoros">Task's number of current pomodoros</label>
+  <input
+    name="newCurrentPomodoros"
+    placeholder="Type the number of pomodoros"
+    formControlName="newCurrentPomodoros"
+    type="number"
+  />
+
+  <label for="newTotalPomodoros">Task's number of total pomodoros</label>
+  <input
+    name="newTotalPomodoros"
+    placeholder="Type the number of pomodoros"
+    formControlName="newTotalPomodoros"
+    type="number"
+  />
+
+  <div class="flex flex-row gap-8">
+    <button
+      class="bg-amber-300 cursor-auto"
+      role="button"
+      type="button"
+      (click)="OnToggleEditing()"
+    >
+      Cancel
+    </button>
+    <button class="bg-red-500 cursor-auto" role="button" type="submit">
+      Submit
+    </button>
+  </div>
+</form>
+} @else {
 <div class="flex flex-row justify-between">
   <p>{{ task().description }}</p>
+
+  <div class="flex flex-row gap-5">
+    <button (click)="OnDeleteTask()">Delete</button>
+    <button (click)="OnToggleEditing()">Edit</button>
+  </div>
 </div>
 }

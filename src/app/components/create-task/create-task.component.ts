@@ -30,12 +30,14 @@ export class CreateTaskComponent implements OnInit {
     // Creating the form
     this.form = new FormGroup({
       description: new FormControl<string>('', [
-        Validators.minLength(3),
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
       ]),
       totalPomodoros: new FormControl<number>(0, [
-        Validators.min(1),
         Validators.required,
+        Validators.min(1),
+        Validators.max(10),
       ]),
     });
   }
