@@ -44,7 +44,7 @@
 </form>
 } @else {
 <div class="flex flex-row justify-between">
-  <p>{{ task().description }}</p>
+  <p (click)="OnSelectTask()">{{ task().description }}</p>
 
   <div class="flex flex-row gap-5">
     <button (click)="OnDeleteTask()">Delete</button>

@@ -14,49 +14,56 @@ import { PomodoroService } from '../../services/pomodoro.service';
   styleUrl: './create-task.component.css',
 })
 export class CreateTaskComponent implements OnInit {
+  // Injecting the PomodoroService for managing tasks
   private pomodoroService = inject(PomodoroService);
+
+  // Form and state variables
   form!: FormGroup;
   isFormEnabled = false;
 
+  // Lifecycle hook
   ngOnInit(): void {
     this.loadForm();
   }
 
+  // Toggles the visibility of the form
   OnToggleForm(): void {
     this.isFormEnabled = !this.isFormEnabled;
   }
 
+  // Initializes the form with validation rules
   private loadForm(): void {
-    // Creating the form
     this.form = new FormGroup({
       description: new FormControl<string>('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50),
+        Validators.required, // Description is required
+        Validators.minLength(3), // Minimum length of 3 characters
+        Validators.maxLength(50), // Maximum length of 50 characters
       ]),
       totalPomodoros: new FormControl<number>(0, [
-        Validators.required,
-        Validators.min(1),
-        Validators.max(10),
+        Validators.required, // Total pomodoros is required
+        Validators.min(1), // Minimum value of 1
+        Validators.max(10), // Maximum value of 10
       ]),
     });
   }
 
+  // Handles form submission
   OnSubmit(): void {
-    // If the form is not valid, return
     if (!this.form.valid) {
-      return;
+      return; // Exit if the form is invalid
     }
 
-    // Creating a new task using the values in the form
+    // Extract values from the form
     const { description, totalPomodoros } = this.form.value;
+
+    // Create a new task using the PomodoroService
     this.pomodoroService.createTask({
       description,
       totalPomodoros,
-      currentPomodoros: 0,
+      currentPomodoros: 0, // Initialize currentPomodoros to 0
     });
 
-    // Resetting and closing the form
+    // Reset the form and close it
     this.form.reset();
     this.OnToggleForm();
   }

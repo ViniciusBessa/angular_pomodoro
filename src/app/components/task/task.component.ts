@@ -57,6 +57,10 @@ export class TaskComponent {
     }
   }
 
+  OnSelectTask(): void {
+    this.pomodoroService.selectTask(this.index());
+  }
+
   // Deletes the task by calling the PomodoroService
   OnDeleteTask(): void {
     this.pomodoroService.removeTask(this.index()); // Removes the task at the given index

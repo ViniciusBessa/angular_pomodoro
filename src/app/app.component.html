@@ -1,4 +1,5 @@
 <main>
+  <app-timer></app-timer>
   @for (task of tasks(); track $index) {
   <app-task [task]="task" [index]="$index" />
   }

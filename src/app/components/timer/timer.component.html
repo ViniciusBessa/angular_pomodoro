@@ -1,1 +1,21 @@
-<p>timer works!</p>
+<div class="flex flex-col gap-6">
+  <p>{{ timeLeft }}</p>
+
+  @if (isTicking) {
+  <button (click)="OnPauseTimer()">Pause Pomodoro</button>
+  } @else if (!isTicking) {
+  <button (click)="OnResumeTimer()">Start Pomodoro</button>
+  }
+
+  <div class="flex flex-row gap-4">
+    <button (click)="OnSetTimer(0)">Pomodoro</button>
+    <button (click)="OnSetTimer(1)">Short Break</button>
+    <button (click)="OnSetTimer(2)">Long Break</button>
+  </div>
+
+  @if (currentTask() !== null) {
+  <p>{{ currentTask()!.description }}</p>
+  } @else {
+  <p>Get to work!</p>
+  }
+</div>

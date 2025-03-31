@@ -4,10 +4,11 @@ import { PomodoroService } from './services/pomodoro.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TaskComponent } from './components/task/task.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
+import { TimerComponent } from './components/timer/timer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [TaskComponent, CreateTaskComponent],
+  imports: [TaskComponent, CreateTaskComponent, TimerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
