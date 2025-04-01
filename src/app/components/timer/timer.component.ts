@@ -89,6 +89,9 @@ export class TimerComponent implements OnInit {
     clearInterval(this.intervalId);
     this.intervalId = null;
 
+    // Play the alarm clock audio
+    new Audio('alarm-clock.mp3').play();
+
     if (
       this.currentTimerType === TimerType.POMODORO &&
       this.currentTask() !== null
