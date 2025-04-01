@@ -1,10 +1,12 @@
 @if (isEditing) {
 <form
-  class="flex flex-col gap-4"
+  [class.h-full]="isEditing"
+  class="flex flex-col gap-4 w-full border-2 border-gray-400 px-4 py-3 rounded-md"
   [formGroup]="editingForm"
   (ngSubmit)="OnSubmit()"
 >
-  <label for="newDescription">Task's description</label>
+  <h1 class="text-2xl text-gray-400">Task Editing</h1>
+  <label for="newDescription">Description</label>
   <input
     name="newDescription"
     placeholder="Type the description"
@@ -12,7 +14,7 @@
     type="text"
   />
 
-  <label for="newCurrentPomodoros">Task's number of current pomodoros</label>
+  <label for="newCurrentPomodoros">Completed number of Pomodoros</label>
   <input
     name="newCurrentPomodoros"
     placeholder="Type the number of pomodoros"
@@ -20,7 +22,7 @@
     type="number"
   />
 
-  <label for="newTotalPomodoros">Task's number of total pomodoros</label>
+  <label for="newTotalPomodoros">Total number of Pomodoros</label>
   <input
     name="newTotalPomodoros"
     placeholder="Type the number of pomodoros"
@@ -30,26 +32,43 @@
 
   <div class="flex flex-row gap-8">
     <button
-      class="bg-amber-300 cursor-auto"
+      class="text-gray-500 p-1 rounded cursor-pointer hover:bg-gray-200 hover:text-gray-700 hover:opacity-80"
       role="button"
       type="button"
       (click)="OnToggleEditing()"
     >
       Cancel
     </button>
-    <button class="bg-red-500 cursor-auto" role="button" type="submit">
+    <button
+      class="text-gray-500 p-1 rounded cursor-pointer hover:bg-gray-200 hover:text-gray-700 hover:opacity-80"
+      role="button"
+      type="submit"
+    >
       Submit
     </button>
   </div>
 </form>
 } @else {
 <div
-  class="flex flex-row justify-between border-2 border-gray-400 px-4 py-3 rounded-md hover:bg-gray-200 hover:text-white hover:cursor-pointer transition-all duration-300"
+  class="flex flex-row justify-between items-center border-2 border-gray-400 px-4 py-3 rounded-md"
 >
-  <p (click)="OnSelectTask()">{{ task().description }}</p>
+  <p
+    class="w-full hover:cursor-pointer hover:opacity-80"
+    (click)="OnSelectTask()"
+  >
+    {{ task().description }}
+  </p>
 
-  <div class="flex flex-row gap-5">
-    <button (click)="OnDeleteTask()">Delete</button>
+  <div class="flex flex-row gap-5 items-center">
+    <p class="text-gray-400">
+      {{ task().currentPomodoros }}/{{ task().totalPomodoros }}
+    </p>
+    <button
+      class="p-1 bg-red-500 text-white rounded-full w-8 h-8 cursor-pointer hover:opacity-70"
+      (click)="OnDeleteTask()"
+    >
+      X
+    </button>
     <button (click)="OnToggleEditing()">Edit</button>
   </div>
 </div>

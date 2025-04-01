@@ -58,7 +58,9 @@
 
   <div>
     @if (selectedTask() !== null) {
-    <p class="text-gray-400 text-center italic">{{ `#${selectedTask()}`}}</p>
+    <p class="text-gray-400 text-center italic">
+      {{ `#${selectedTask()! + 1}`}}
+    </p>
     }
     <p class="text-lg text-center italic mb-6">
       {{ currentTask() !== null ? currentTask()!.description : "Get to work!" }}

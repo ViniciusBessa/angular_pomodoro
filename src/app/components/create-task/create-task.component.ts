@@ -39,7 +39,7 @@ export class CreateTaskComponent implements OnInit {
         Validators.minLength(3), // Minimum length of 3 characters
         Validators.maxLength(50), // Maximum length of 50 characters
       ]),
-      totalPomodoros: new FormControl<number>(0, [
+      totalPomodoros: new FormControl<number>(1, [
         Validators.required, // Total pomodoros is required
         Validators.min(1), // Minimum value of 1
         Validators.max(10), // Maximum value of 10

@@ -5,17 +5,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { TaskComponent } from './components/task/task.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { TimerComponent } from './components/timer/timer.component';
-import { ConfigurationsService } from './services/configurations.service';
-import { SettingsComponent } from './components/settings/settings.component';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    TaskComponent,
-    CreateTaskComponent,
-    TimerComponent,
-    SettingsComponent,
-  ],
+  imports: [TaskComponent, CreateTaskComponent, TimerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
