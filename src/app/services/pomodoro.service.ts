@@ -8,7 +8,7 @@ import { Task } from '../models/task.model';
 export class PomodoroService {
   // Subjects to manage tasks and the selected task
   tasksSubject: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>([]);
-  selectedTask: BehaviorSubject<number | null> = new BehaviorSubject<
+  selectedTaskSubject: BehaviorSubject<number | null> = new BehaviorSubject<
     number | null
   >(null);
 
@@ -31,7 +31,7 @@ export class PomodoroService {
 
   // Selects a task by its index
   selectTask(index: number): void {
-    this.selectedTask.next(index);
+    this.selectedTaskSubject.next(index);
   }
 
   // Creates a new task and adds it to the task list
@@ -58,13 +58,13 @@ export class PomodoroService {
 
   // Progresses the selected task by incrementing its currentPomodoros
   progressSelectedTask(): void {
-    const index = this.selectedTask.value!;
+    const index = this.selectedTaskSubject.value!;
     const task = this.tasksSubject.value[index];
 
     if (task.currentPomodoros === task.totalPomodoros - 1) {
       // If the task is complete, remove it and clear the selection
       this.removeTask(index);
-      this.selectedTask.next(null);
+      this.selectedTaskSubject.next(null);
     } else {
       // Otherwise, increment the currentPomodoros count
       this.editTask(index, {

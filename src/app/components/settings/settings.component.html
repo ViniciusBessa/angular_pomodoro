@@ -1,1 +1,16 @@
-<p>settings works!</p>
+<button (click)="OnToggleConfigs()">Settings</button>
+
+@if (showConfigs) {
+<div
+  class="absolute top-0 left-0 h-full w-full bg-white z-10 opacity-50"
+  (click)="OnToggleConfigs()"
+></div>
+
+<dialog
+  class="flex flex-col justify-center items-center absolute top-0 left-0 h-full w-full bg-transparent"
+>
+  <div class="flex flex-col gap-12 h-64 w-24 z-20">
+    <button (click)="OnChangeTheme()">Theme: {{ theme() }}</button>
+  </div>
+</dialog>
+}

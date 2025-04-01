@@ -15,7 +15,7 @@ export class TimerComponent implements OnInit {
 
   // Signals
   tasks = toSignal(this.pomodoroService.tasksSubject);
-  selectedTask = toSignal(this.pomodoroService.selectedTask);
+  selectedTask = toSignal(this.pomodoroService.selectedTaskSubject);
   currentTask = computed(() => {
     if (this.selectedTask() != null) {
       return this.tasks()![this.selectedTask()!];
@@ -37,7 +37,7 @@ export class TimerComponent implements OnInit {
   // Lifecycle hook
   ngOnInit(): void {
     // Subscribe to selectedTask changes and reset the timer to Pomodoro mode
-    this.pomodoroService.selectedTask.subscribe(() =>
+    this.pomodoroService.selectedTaskSubject.subscribe(() =>
       this.OnSetTimer(TimerType.POMODORO)
     );
   }

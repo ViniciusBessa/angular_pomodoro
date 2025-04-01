@@ -1,5 +1,12 @@
-<main>
-  <app-timer></app-timer>
+<main
+  [class.dark]="theme() === 'dark'"
+  class="dark:bg-gray-900 dark:text-white"
+>
+  <div class="flex flex-row justify-between">
+    <p>Pomodoro!</p>
+    <app-settings />
+  </div>
+  <app-timer />
   @for (task of tasks(); track $index) {
   <app-task [task]="task" [index]="$index" />
   }
