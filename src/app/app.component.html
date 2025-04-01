@@ -1,16 +1,19 @@
 <main
   [class.dark]="theme() === 'dark'"
-  class="dark:bg-gray-900 dark:text-white"
+  class="flex justify-center dark:bg-gray-900 dark:text-white pt-18 px-8"
 >
-  <div class="flex flex-row justify-between">
-    <p>Pomodoro!</p>
-    <app-settings />
+  <div class="flex flex-col gap-2 w-96">
+    <div class="flex flex-row justify-between">
+      <p class="text-lg italic">Pomodoro!</p>
+      <app-settings />
+    </div>
+    <hr />
+    <app-timer />
+    @for (task of tasks(); track $index) {
+    <app-task [task]="task" [index]="$index" />
+    }
+    <app-create-task />
   </div>
-  <app-timer />
-  @for (task of tasks(); track $index) {
-  <app-task [task]="task" [index]="$index" />
-  }
-  <app-create-task />
 </main>
 <footer>
   <a href="https://www.flaticon.com/free-icons/timer" title="timer icons"

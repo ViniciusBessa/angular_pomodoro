@@ -4,6 +4,15 @@
 /* Apply the dark theme through the class*/
 @custom-variant dark (&:where(.dark, .dark *));
 
+@font-face {
+  font-family: clock;
+  src: url(../public/fonts/digital-7.ttf) format("opentype");
+}
+
+* {
+  --clock: "clock";
+}
+
 body {
   height: 100vh;
 }

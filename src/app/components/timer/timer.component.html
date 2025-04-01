@@ -1,21 +1,50 @@
 <div class="flex flex-col gap-6">
-  <p>{{ timeLeft }}</p>
+  <div
+    class="flex flex-col gap-12 justify-center items-center border-2 border-gray-400 rounded-md p-8"
+  >
+    <p class="text-9xl font-(family-name:--clock)">{{ getFormattedTime }}</p>
 
-  @if (isTicking) {
-  <button (click)="OnPauseTimer()">Pause Pomodoro</button>
-  } @else if (!isTicking) {
-  <button (click)="OnResumeTimer()">Start Pomodoro</button>
-  }
-
-  <div class="flex flex-row gap-4">
-    <button (click)="OnSetTimer(0)">Pomodoro</button>
-    <button (click)="OnSetTimer(1)">Short Break</button>
-    <button (click)="OnSetTimer(2)">Long Break</button>
+    @if (isTicking) {
+    <button
+      class="bg-red-600 text-white p-3 rounded-lg shadow-red-700 shadow-md hover:opacity-80 hover:cursor-pointer"
+      (click)="OnPauseTimer()"
+    >
+      Pause Timer
+    </button>
+    } @else if (!isTicking) {
+    <button
+      class="bg-red-600 text-white p-3 rounded-lg shadow-red-700 shadow-md hover:opacity-80 hover:cursor-pointer"
+      (click)="OnResumeTimer()"
+    >
+      {{ intervalId === null ? "Start Timer" : "Resume Timer" }}
+    </button>
+    }
   </div>
 
   @if (currentTask() !== null) {
-  <p>{{ currentTask()!.description }}</p>
+  <p class="text-center">{{ currentTask()!.description }}</p>
   } @else {
-  <p>Get to work!</p>
+  <p class="text-center">Get to work!</p>
   }
+
+  <div class="flex flex-row gap-4 justify-between">
+    <button
+      class="bg-red-600 text-white p-3 rounded-lg shadow-red-700 shadow-md hover:opacity-80 hover:cursor-pointer"
+      (click)="OnSetTimer(0)"
+    >
+      Pomodoro
+    </button>
+    <button
+      class="bg-blue-600 text-white p-3 rounded-lg shadow-blue-700 shadow-md hover:opacity-80 hover:cursor-pointer"
+      (click)="OnSetTimer(1)"
+    >
+      Short Break
+    </button>
+    <button
+      class="bg-green-600 text-white p-3 rounded-lg shadow-green-700 shadow-md hover:opacity-80 hover:cursor-pointer"
+      (click)="OnSetTimer(2)"
+    >
+      Long Break
+    </button>
+  </div>
 </div>

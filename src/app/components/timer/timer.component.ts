@@ -2,6 +2,8 @@ import { Component, computed, inject, OnInit } from '@angular/core';
 import { PomodoroService } from '../../services/pomodoro.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Task } from '../../models/task.model';
+import { ConfigurationsService } from '../../services/configurations.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-timer',
@@ -12,6 +14,12 @@ import { Task } from '../../models/task.model';
 export class TimerComponent implements OnInit {
   // Injecting the PomodoroService for managing tasks
   pomodoroService = inject(PomodoroService);
+
+  // Injecting the ConfigurationsService for managing the app's configs
+  configurationsService = inject(ConfigurationsService);
+
+  // Injecting the Title Service for setting the page's title
+  titleService = inject(Title);
 
   // Signals
   tasks = toSignal(this.pomodoroService.tasksSubject);
@@ -24,12 +32,14 @@ export class TimerComponent implements OnInit {
   });
 
   // Timer constants
-  readonly POMODORO_TIME = 5; // 20 minutes
-  readonly SHORT_BREAK_TIME = 2; // 5 minutes
-  readonly LONG_BREAK_TIME = 3; // 10 minutes
+  pomodoroTime = toSignal(this.configurationsService.pomodoroDurationSubject);
+  shortBreakTime = toSignal(
+    this.configurationsService.shortBreakDurationSubject
+  );
+  longBreakTime = toSignal(this.configurationsService.longBreakDurationSubject);
 
   // Timer state variables
-  intervalId: any;
+  intervalId: any = null;
   isTicking = false;
   currentTimerType = TimerType.POMODORO;
   timeLeft = this.getTimeRemaining();
@@ -44,9 +54,16 @@ export class TimerComponent implements OnInit {
 
   // Timer control methods
   OnSetTimer(timerType: TimerType): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
     this.isTicking = false;
     this.currentTimerType = timerType;
     this.timeLeft = this.getTimeRemaining();
+    this.titleService.setTitle(
+      `${this.getCurrentTimerType}: ${this.getFormattedTime}`
+    );
   }
 
   OnResumeTimer(): void {
@@ -56,6 +73,9 @@ export class TimerComponent implements OnInit {
         this.OnTimerFinished();
       } else {
         this.timeLeft -= 1;
+        this.titleService.setTitle(
+          `${this.getCurrentTimerType}: ${this.getFormattedTime}`
+        );
       }
     }, 1000);
   }
@@ -67,6 +87,7 @@ export class TimerComponent implements OnInit {
 
   OnTimerFinished(): void {
     clearInterval(this.intervalId);
+    this.intervalId = null;
 
     if (
       this.currentTimerType === TimerType.POMODORO &&
@@ -118,11 +139,45 @@ export class TimerComponent implements OnInit {
   private getTimeRemaining(): number {
     switch (this.currentTimerType) {
       case TimerType.POMODORO:
-        return this.POMODORO_TIME;
+        return this.pomodoroTime()! * 60;
       case TimerType.SHORT_BREAK:
-        return this.SHORT_BREAK_TIME;
+        return this.shortBreakTime()! * 60;
       default:
-        return this.LONG_BREAK_TIME;
+        return this.longBreakTime()! * 60;
+    }
+  }
+
+  get getFormattedTime(): string {
+    // Calculate the number of hours remaining
+    const hours = Math.floor(this.timeLeft / 3600);
+
+    // Calculate the number of minutes remaining and pad with leading zero if needed
+    const minutes = Math.floor((this.timeLeft % 3600) / 60)
+      .toString()
+      .padStart(2, '0');
+
+    // Calculate the number of seconds remaining and pad with leading zero if needed
+    const seconds = Math.floor((this.timeLeft % 3600) % 60)
+      .toString()
+      .padStart(2, '0');
+
+    // If there are hours remaining, include them in the formatted time
+    if (hours > 0) {
+      return `${hours.toString().padStart(2, '0')}:${minutes}:${seconds}`;
+    }
+
+    // Otherwise, return only minutes and seconds
+    return `${minutes}:${seconds}`;
+  }
+
+  get getCurrentTimerType(): string {
+    switch (this.currentTimerType) {
+      case TimerType.POMODORO:
+        return 'Pomodoro';
+      case TimerType.SHORT_BREAK:
+        return 'Short Break';
+      default:
+        return 'Long Break';
     }
   }
 }

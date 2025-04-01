@@ -47,10 +47,17 @@ export class PomodoroService {
         i === index ? updatedTask : task
       )
     );
+
+    if (index === this.selectedTaskSubject.value) {
+      this.selectTask(index);
+    }
   }
 
   // Removes a task at the specified index
   removeTask(index: number): void {
+    if (index === this.selectedTaskSubject.value) {
+      this.selectedTaskSubject.next(null);
+    }
     this.tasksSubject.next(
       this.tasksSubject.value.filter((_, i) => i !== index)
     );

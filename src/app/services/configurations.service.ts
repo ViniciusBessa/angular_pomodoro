@@ -22,14 +22,14 @@ export class ConfigurationsService {
       Number(localStorage.getItem('pomodoroDuration')) || 30
     );
 
-    // Initialize the short break duration from local storage or default to 30 minutes
+    // Initialize the short break duration from local storage or default to 5 minutes
     this.shortBreakDurationSubject = new BehaviorSubject<number>(
-      Number(localStorage.getItem('shortBreakDuration')) || 30
+      Number(localStorage.getItem('shortBreakDuration')) || 5
     );
 
-    // Initialize the long break duration from local storage or default to 30 minutes
+    // Initialize the long break duration from local storage or default to 15 minutes
     this.longBreakDurationSubject = new BehaviorSubject<number>(
-      Number(localStorage.getItem('longBreakDuration')) || 30
+      Number(localStorage.getItem('longBreakDuration')) || 15
     );
   }
 
