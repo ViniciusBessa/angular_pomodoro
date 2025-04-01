@@ -1,50 +1,67 @@
 <div class="flex flex-col gap-6">
   <div
-    class="flex flex-col gap-12 justify-center items-center border-2 border-gray-400 rounded-md p-8"
+    class="flex flex-col gap-12 justify-center items-center bg-gray-50 py-8 px-4"
   >
+    <div class="flex flex-row gap-8 justify-between">
+      <button
+        [class]="{
+          'bg-gray-400': currentTimerType == 0,
+          'text-white': currentTimerType == 0,
+          'font-bold': currentTimerType == 0
+        }"
+        class="flex justify-center items-center h-8 p-2 rounded hover:cursor-pointer transition-all duration-200"
+        (click)="OnSetTimer(0)"
+      >
+        Pomodoro
+      </button>
+      <button
+        [class]="{
+          'bg-gray-400': currentTimerType == 1,
+          'text-white': currentTimerType == 1,
+          'font-bold': currentTimerType == 1
+        }"
+        class="flex justify-center items-center h-8 p-2 rounded hover:cursor-pointer transition-all duration-200"
+        (click)="OnSetTimer(1)"
+      >
+        Short Break
+      </button>
+      <button
+        [class]="{
+          'bg-gray-400': currentTimerType == 2,
+          'text-white': currentTimerType == 2,
+          'font-bold': currentTimerType == 2
+        }"
+        class="flex justify-center items-center h-8 p-2 rounded hover:cursor-pointer transition-all duration-200"
+        (click)="OnSetTimer(2)"
+      >
+        Long Break
+      </button>
+    </div>
     <p class="text-9xl font-(family-name:--clock)">{{ getFormattedTime }}</p>
 
     @if (isTicking) {
     <button
-      class="bg-red-600 text-white p-3 rounded-lg shadow-red-700 shadow-md hover:opacity-80 hover:cursor-pointer"
+      class="w-52 text-lg font-bold bg-red-600 text-white p-3 rounded-lg shadow-md hover:opacity-80 hover:cursor-pointer relative top-2 active:bottom-2"
       (click)="OnPauseTimer()"
     >
-      Pause Timer
+      Pause
     </button>
     } @else if (!isTicking) {
     <button
-      class="bg-red-600 text-white p-3 rounded-lg shadow-red-700 shadow-md hover:opacity-80 hover:cursor-pointer"
+      class="w-52 text-lg font-bold bg-red-600 text-white p-3 rounded-lg shadow-red-700 shadow-md hover:opacity-80 hover:cursor-pointer relative active:top-2"
       (click)="OnResumeTimer()"
     >
-      {{ intervalId === null ? "Start Timer" : "Resume Timer" }}
+      {{ intervalId === null ? "Start" : "Resume" }}
     </button>
     }
   </div>
 
-  @if (currentTask() !== null) {
-  <p class="text-center">{{ currentTask()!.description }}</p>
-  } @else {
-  <p class="text-center">Get to work!</p>
-  }
-
-  <div class="flex flex-row gap-4 justify-between">
-    <button
-      class="bg-red-600 text-white p-3 rounded-lg shadow-red-700 shadow-md hover:opacity-80 hover:cursor-pointer"
-      (click)="OnSetTimer(0)"
-    >
-      Pomodoro
-    </button>
-    <button
-      class="bg-blue-600 text-white p-3 rounded-lg shadow-blue-700 shadow-md hover:opacity-80 hover:cursor-pointer"
-      (click)="OnSetTimer(1)"
-    >
-      Short Break
-    </button>
-    <button
-      class="bg-green-600 text-white p-3 rounded-lg shadow-green-700 shadow-md hover:opacity-80 hover:cursor-pointer"
-      (click)="OnSetTimer(2)"
-    >
-      Long Break
-    </button>
+  <div>
+    @if (selectedTask() !== null) {
+    <p class="text-gray-400 text-center italic">{{ `#${selectedTask()}`}}</p>
+    }
+    <p class="text-lg text-center italic mb-6">
+      {{ currentTask() !== null ? currentTask()!.description : "Get to work!" }}
+    </p>
   </div>
 </div>

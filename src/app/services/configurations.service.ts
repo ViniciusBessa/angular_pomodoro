@@ -6,17 +6,11 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ConfigurationsService {
   // Subjects to manage configuration settings
-  themeSubject: BehaviorSubject<string>; // Tracks the current theme (light or dark)
   pomodoroDurationSubject: BehaviorSubject<number>; // Tracks the Pomodoro duration
   shortBreakDurationSubject: BehaviorSubject<number>; // Tracks the short break duration
   longBreakDurationSubject: BehaviorSubject<number>; // Tracks the long break duration
 
   constructor() {
-    // Initialize the theme from local storage or default to 'dark'
-    this.themeSubject = new BehaviorSubject<string>(
-      localStorage.getItem('theme') || 'dark'
-    );
-
     // Initialize the Pomodoro duration from local storage or default to 30 minutes
     this.pomodoroDurationSubject = new BehaviorSubject<number>(
       Number(localStorage.getItem('pomodoroDuration')) || 30
@@ -31,13 +25,6 @@ export class ConfigurationsService {
     this.longBreakDurationSubject = new BehaviorSubject<number>(
       Number(localStorage.getItem('longBreakDuration')) || 15
     );
-  }
-
-  // Toggles the theme between light and dark
-  changeTheme(): void {
-    const newTheme = this.themeSubject.value === 'light' ? 'dark' : 'light';
-    localStorage.setItem('theme', newTheme); // Save the new theme to local storage
-    this.themeSubject.next(newTheme); // Update the theme subject
   }
 
   // Sets the Pomodoro duration and updates the subject

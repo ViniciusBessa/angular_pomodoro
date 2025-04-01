@@ -21,11 +21,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 })
 export class AppComponent {
   private pomodoroService = inject(PomodoroService);
-  private configurationsService = inject(ConfigurationsService);
-
   tasks: Signal<Task[] | undefined> = toSignal(
     this.pomodoroService.tasksSubject
   );
-
-  theme = toSignal(this.configurationsService.themeSubject);
 }
