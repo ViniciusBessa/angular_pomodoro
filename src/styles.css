@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: clock;
-  src: url(../public/fonts/digital-7.ttf) format("opentype");
+  src: url(../public/digital-7.ttf) format("opentype");
 }
 
 * {
