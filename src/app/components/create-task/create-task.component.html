@@ -5,6 +5,8 @@
   (ngSubmit)="OnSubmit()"
 >
   <h1 class="text-2xl text-gray-400">Task</h1>
+
+  <!-- Description Field -->
   <label for="description">Description</label>
   <input
     name="description"
@@ -12,7 +14,20 @@
     formControlName="description"
     type="text"
   />
+  <!-- Error Messages for Description -->
+  @if (form.get('description')?.errors && form.get('description')?.touched) {
+  <div class="text-red-500 text-sm">
+    @if (form.get('description')?.errors?.['required']) {
+    <div>Description is required.</div>
+    } @if (form.get('description')?.errors?.['minlength']) {
+    <div>Description must be at least 3 characters long.</div>
+    } @if (form.get('description')?.errors?.['maxlength']) {
+    <div>Description cannot exceed 50 characters.</div>
+    }
+  </div>
+  }
 
+  <!-- Total Pomodoros Field -->
   <label for="totalPomodoros">Number of Pomodoros</label>
   <input
     name="totalPomodoros"
@@ -20,7 +35,21 @@
     formControlName="totalPomodoros"
     type="number"
   />
+  <!-- Error Messages for Total Pomodoros -->
+  @if (form.get('totalPomodoros')?.errors &&
+  form.get('totalPomodoros')?.touched) {
+  <div class="text-red-500 text-sm">
+    @if (form.get('totalPomodoros')?.errors?.['required']) {
+    <div>Number of Pomodoros is required.</div>
+    } @if (form.get('totalPomodoros')?.errors?.['min']) {
+    <div>Number of Pomodoros must be at least 1.</div>
+    } @if (form.get('totalPomodoros')?.errors?.['max']) {
+    <div>Number of Pomodoros cannot exceed 10.</div>
+    }
+  </div>
+  }
 
+  <!-- Buttons -->
   <div class="flex justify-end gap-8">
     <button
       class="text-gray-500 p-1 rounded cursor-pointer hover:bg-gray-200 hover:text-gray-700 hover:opacity-80"

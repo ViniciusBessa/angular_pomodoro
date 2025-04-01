@@ -6,6 +6,8 @@
   (ngSubmit)="OnSubmit()"
 >
   <h1 class="text-2xl text-gray-400">Task Editing</h1>
+
+  <!-- Description Field -->
   <label for="newDescription">Description</label>
   <input
     name="newDescription"
@@ -13,7 +15,21 @@
     formControlName="newDescription"
     type="text"
   />
+  <!-- Error Messages for Description -->
+  @if (editingForm.get('newDescription')?.errors &&
+  editingForm.get('newDescription')?.touched) {
+  <div class="text-red-500 text-sm">
+    @if (editingForm.get('newDescription')?.errors?.['required']) {
+    <div>Description is required.</div>
+    } @if (editingForm.get('newDescription')?.errors?.['minlength']) {
+    <div>Description must be at least 3 characters long.</div>
+    } @if (editingForm.get('newDescription')?.errors?.['maxlength']) {
+    <div>Description cannot exceed 50 characters.</div>
+    }
+  </div>
+  }
 
+  <!-- Current Pomodoros Field -->
   <label for="newCurrentPomodoros">Completed number of Pomodoros</label>
   <input
     name="newCurrentPomodoros"
@@ -21,7 +37,19 @@
     formControlName="newCurrentPomodoros"
     type="number"
   />
+  <!-- Error Messages for Current Pomodoros -->
+  @if (editingForm.get('newCurrentPomodoros')?.errors &&
+  editingForm.get('newCurrentPomodoros')?.touched) {
+  <div class="text-red-500 text-sm">
+    @if (editingForm.get('newCurrentPomodoros')?.errors?.['required']) {
+    <div>Completed Pomodoros is required.</div>
+    } @if (editingForm.get('newCurrentPomodoros')?.errors?.['min']) {
+    <div>Completed Pomodoros must be at least 0.</div>
+    }
+  </div>
+  }
 
+  <!-- Total Pomodoros Field -->
   <label for="newTotalPomodoros">Total number of Pomodoros</label>
   <input
     name="newTotalPomodoros"
@@ -29,7 +57,30 @@
     formControlName="newTotalPomodoros"
     type="number"
   />
+  <!-- Error Messages for Total Pomodoros -->
+  @if (editingForm.get('newTotalPomodoros')?.errors &&
+  editingForm.get('newTotalPomodoros')?.touched) {
+  <div class="text-red-500 text-sm">
+    @if (editingForm.get('newTotalPomodoros')?.errors?.['required']) {
+    <div>Total Pomodoros is required.</div>
+    } @if (editingForm.get('newTotalPomodoros')?.errors?.['max']) {
+    <div>Total Pomodoros cannot exceed 10.</div>
+    }
+  </div>
+  }
 
+  <!-- Custom Validators Error Messages -->
+  @if (editingForm.errors?.['totalLessThanOrEqualToCurrent']) {
+  <div class="text-red-500 text-sm">
+    Total Pomodoros must be greater than Completed Pomodoros.
+  </div>
+  } @if (editingForm.errors?.['currentGreaterThanOrEqualToTotal']) {
+  <div class="text-red-500 text-sm">
+    Completed Pomodoros must be less than Total Pomodoros.
+  </div>
+  }
+
+  <!-- Buttons -->
   <div class="flex flex-row gap-8">
     <button
       class="text-gray-500 p-1 rounded cursor-pointer hover:bg-gray-200 hover:text-gray-700 hover:opacity-80"
