@@ -65,10 +65,16 @@ export class PomodoroService {
 
   // Progresses the selected task by incrementing its currentPomodoros
   progressSelectedTask(): void {
+    if (
+      this.selectedTaskSubject.value === null ||
+      this.tasksSubject.value.length <= this.selectedTaskSubject.value
+    ) {
+      return;
+    }
     const index = this.selectedTaskSubject.value!;
     const task = this.tasksSubject.value[index];
 
-    if (task.currentPomodoros === task.totalPomodoros - 1) {
+    if (task.currentPomodoros >= task.totalPomodoros - 1) {
       // If the task is complete, remove it and clear the selection
       this.removeTask(index);
       this.selectedTaskSubject.next(null);

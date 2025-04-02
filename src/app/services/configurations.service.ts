@@ -44,4 +44,13 @@ export class ConfigurationsService {
     localStorage.setItem('longBreakDuration', duration.toString()); // Save to local storage
     this.longBreakDurationSubject.next(duration); // Update the subject
   }
+
+  // Resets the duration to default
+  resetToDefaultDurations() {
+    localStorage.clear();
+
+    this.setPomodoroDuration(30);
+    this.setShortBreakDuration(5);
+    this.setLongBreakDuration(15);
+  }
 }
