@@ -64,7 +64,7 @@ export class CreateTaskComponent implements OnInit {
     });
 
     // Reset the form and close it
-    this.form.reset();
+    this.loadForm();
     this.OnToggleForm();
   }
 }

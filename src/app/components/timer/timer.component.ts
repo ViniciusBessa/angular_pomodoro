@@ -89,8 +89,8 @@ export class TimerComponent implements OnInit {
     clearInterval(this.intervalId);
     this.intervalId = null;
 
-    // Play the alarm clock audio
-    new Audio('alarm-clock.mp3').play();
+    // Play the alarm clock audio after user interaction
+    this.playAlarm();
 
     if (
       this.currentTimerType === TimerType.POMODORO &&
@@ -106,6 +106,13 @@ export class TimerComponent implements OnInit {
     } else {
       this.OnSetTimer(TimerType.POMODORO);
     }
+  }
+
+  private playAlarm(): void {
+    const audio = new Audio('alarm-clock.mp3');
+    audio.play().catch((error) => {
+      console.error('Audio playback failed:', error);
+    });
   }
 
   // Handles the completion of a Pomodoro session
@@ -186,7 +193,7 @@ export class TimerComponent implements OnInit {
 }
 
 // Enum for timer types
-enum TimerType {
+export enum TimerType {
   POMODORO,
   SHORT_BREAK,
   LONG_BREAK,
