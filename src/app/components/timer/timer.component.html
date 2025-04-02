@@ -9,7 +9,7 @@
           'text-white': currentTimerType == 0,
           'font-bold': currentTimerType == 0
         }"
-        class="flex justify-center items-center h-8 p-2 rounded hover:cursor-pointer transition-all duration-200"
+        class="flex justify-center items-center min-h-8 p-2 rounded hover:cursor-pointer transition-all duration-200"
         (click)="OnSetTimer(0)"
       >
         Pomodoro
@@ -20,7 +20,7 @@
           'text-white': currentTimerType == 1,
           'font-bold': currentTimerType == 1
         }"
-        class="flex justify-center items-center h-8 p-2 rounded hover:cursor-pointer transition-all duration-200"
+        class="flex justify-center items-center min-h-8 p-2 rounded hover:cursor-pointer transition-all duration-200"
         (click)="OnSetTimer(1)"
       >
         Short Break
@@ -31,7 +31,7 @@
           'text-white': currentTimerType == 2,
           'font-bold': currentTimerType == 2
         }"
-        class="flex justify-center items-center h-8 p-2 rounded hover:cursor-pointer transition-all duration-200"
+        class="flex justify-center items-center min-h-8 p-2 rounded hover:cursor-pointer transition-all duration-200"
         (click)="OnSetTimer(2)"
       >
         Long Break
